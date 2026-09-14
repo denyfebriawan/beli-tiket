@@ -1,4 +1,5 @@
 import { CalendarClock, ShieldCheck, Users } from "lucide-react";
+import { Reveal } from "@/components/landing/reveal";
 
 const steps = [
   {
@@ -24,18 +25,22 @@ const steps = [
 export function HowItWorks() {
   return (
     <section id="how-it-works" className="mx-auto w-full max-w-6xl px-6 py-24">
-      <div className="mx-auto mb-12 max-w-xl text-center">
+      <Reveal className="mx-auto mb-12 max-w-xl text-center">
         <h2 className="font-heading text-4xl font-semibold tracking-tight">
           How it works
         </h2>
         <p className="mt-3 text-lg text-muted-foreground">
           Three roles, one moment of truth: the second a drop goes live.
         </p>
-      </div>
+      </Reveal>
 
       <div className="grid gap-8 sm:grid-cols-3">
         {steps.map((step, index) => (
-          <div key={step.title} className="flex flex-col items-start gap-3">
+          <Reveal
+            key={step.title}
+            delay={index * 100}
+            className="flex flex-col items-start gap-3"
+          >
             <div className="flex size-10 items-center justify-center rounded-full bg-accent text-accent-foreground">
               <step.icon className="size-5" />
             </div>
@@ -43,7 +48,7 @@ export function HowItWorks() {
               {index + 1}. {step.title}
             </h3>
             <p className="text-base text-muted-foreground">{step.description}</p>
-          </div>
+          </Reveal>
         ))}
       </div>
     </section>

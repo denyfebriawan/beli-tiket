@@ -3,6 +3,7 @@ import { Hero } from "@/components/landing/hero";
 import { DropCard } from "@/components/landing/drop-card";
 import { HowItWorks } from "@/components/landing/how-it-works";
 import { SiteFooter } from "@/components/landing/site-footer";
+import { Reveal } from "@/components/landing/reveal";
 import { mockDrops } from "@/lib/mock-drops";
 
 export default function Home() {
@@ -14,7 +15,7 @@ export default function Home() {
         <Hero />
 
         <section id="drops" className="mx-auto w-full max-w-6xl px-6 py-24">
-          <div className="mb-10 flex items-end justify-between">
+          <Reveal className="mb-10 flex items-end justify-between">
             <div>
               <h2 className="font-heading text-4xl font-semibold tracking-tight">
                 Live &amp; upcoming drops
@@ -23,11 +24,13 @@ export default function Home() {
                 Across every organizer on the platform.
               </p>
             </div>
-          </div>
+          </Reveal>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {mockDrops.map((drop) => (
-              <DropCard key={drop.id} drop={drop} />
+            {mockDrops.map((drop, index) => (
+              <Reveal key={drop.id} delay={index * 75}>
+                <DropCard drop={drop} />
+              </Reveal>
             ))}
           </div>
         </section>

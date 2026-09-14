@@ -52,7 +52,7 @@ export function DropCard({ drop }: { drop: MockDrop }) {
   const soldOut = drop.status === "SOLD_OUT";
 
   return (
-    <Card>
+    <Card className="transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:ring-primary/40">
       <CardHeader>
         <div className="flex items-start justify-between gap-2">
           <CardTitle className="text-lg">{drop.name}</CardTitle>

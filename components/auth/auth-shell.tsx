@@ -24,10 +24,10 @@ export function AuthShell({
         Beli Tiket
       </Link>
 
-      <Card className="w-full max-w-sm">
+      <Card size="sm" className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle className="text-lg">{title}</CardTitle>
-          <CardDescription className="text-base">{description}</CardDescription>
+          <CardTitle>{title}</CardTitle>
+          <CardDescription>{description}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">{children}</CardContent>
       </Card>

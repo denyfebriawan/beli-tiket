@@ -1,6 +1,6 @@
 import { cn } from "cn";
 import { buttonVariants } from "@/components/ui/button";
-import { Reveal } from "@/components/landing/reveal";
+import { Reveal } from "@/components/site/reveal";
 
 export function Hero() {
   return (

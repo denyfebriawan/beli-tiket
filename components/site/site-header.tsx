@@ -13,12 +13,12 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-6 text-base text-muted-foreground sm:flex">
-          <a href="#drops" className="transition-colors hover:text-foreground">
+          <Link href="/drops" className="transition-colors hover:text-foreground">
             Live Drops
-          </a>
-          <a href="#how-it-works" className="transition-colors hover:text-foreground">
+          </Link>
+          <Link href="/#how-it-works" className="transition-colors hover:text-foreground">
             How it works
-          </a>
+          </Link>
         </nav>
 
         <div className="flex items-center gap-2">

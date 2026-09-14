@@ -1,5 +1,5 @@
 import { CalendarClock, ShieldCheck, Users } from "lucide-react";
-import { Reveal } from "@/components/landing/reveal";
+import { Reveal } from "@/components/site/reveal";
 
 const steps = [
   {

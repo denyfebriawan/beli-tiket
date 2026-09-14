@@ -42,3 +42,5 @@ next-env.d.ts
 
 # .md
 PLANNING.md
+
+/app/generated/prisma

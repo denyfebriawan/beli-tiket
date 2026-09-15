@@ -1,9 +1,14 @@
+import { headers } from "next/headers";
 import Link from "next/link";
 import { Ticket } from "lucide-react";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "cn";
+import { auth } from "@/lib/auth";
+import { signOutAction } from "@/lib/actions/sign-out";
 
-export function SiteHeader() {
+export async function SiteHeader() {
+  const session = await auth.api.getSession({ headers: await headers() });
+
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur">
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6">
@@ -21,14 +26,27 @@ export function SiteHeader() {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-2">
-          <Link href="/login" className={cn(buttonVariants({ variant: "ghost" }))}>
-            Sign in
-          </Link>
-          <Link href="/register" className={cn(buttonVariants({}))}>
-            Sign up
-          </Link>
-        </div>
+        {session ? (
+          <div className="flex items-center gap-3">
+            <span className="hidden text-sm text-muted-foreground sm:inline">
+              {session.user.name}
+            </span>
+            <form action={signOutAction}>
+              <Button variant="outline" type="submit">
+                Sign out
+              </Button>
+            </form>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <Link href="/login" className={cn(buttonVariants({ variant: "ghost" }))}>
+              Sign in
+            </Link>
+            <Link href="/register" className={cn(buttonVariants({}))}>
+              Sign up
+            </Link>
+          </div>
+        )}
       </div>
     </header>
   );

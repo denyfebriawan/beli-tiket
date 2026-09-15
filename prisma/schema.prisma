@@ -40,14 +40,80 @@ enum OrderStatus {
 }
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
-  passwordHash String
-  role         Role     @default(BUYER)
-  createdAt    DateTime @default(now())
+  id            String   @id @default(cuid())
+  email         String   @unique
+  emailVerified Boolean  @default(false)
+  name          String
+  image         String?
+  role          Role     @default(BUYER)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  drops  Drop[]
-  orders Order[]
+  drops    Drop[]
+  orders   Order[]
+  sessions Session[]
+  accounts Account[]
+
+  // Better Auth's Prisma adapter looks up its tables by lowercase name
+  // (information_schema is case-sensitive, and Postgres preserves whatever
+  // case Prisma quotes a table with) — @@map keeps this table matching that
+  // convention while our own domain tables (Drop/Ticket/Order) stay PascalCase.
+  @@map("user")
+}
+
+// Better Auth's required tables (session/account/verification): Better Auth
+// generates its own ids and always supplies them explicitly on create, so
+// unlike our own models these don't need a Prisma @default for id.
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  // Credential-provider password hash lives here (not on User) — this is
+  // where Better Auth's email/password plugin actually stores it.
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
 }
 
 // QueueEntry (the virtual waiting room) is deliberately not modeled here —
